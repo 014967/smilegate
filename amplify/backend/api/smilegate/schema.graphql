@@ -1,0 +1,22 @@
+type Profile @model{
+  id : ID!
+  name : String!
+  description : String 
+  profile_img : String
+}
+
+
+type Category @model{
+  id : ID!
+  name : String
+  board : [Board] @connection(keyName : "categoryId" , fields: ["id"])
+
+}
+
+type Board @model @key(name: "categoryId", fields : ["categoryID"]){
+  id :ID!
+  categoryID : ID!
+  title : String
+  content : String
+  
+}

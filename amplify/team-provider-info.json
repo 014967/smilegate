@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-smilegate-dev-175832-authRole",
+      "UnauthRoleArn": "arn:aws:iam::804049472649:role/amplify-smilegate-dev-175832-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::804049472649:role/amplify-smilegate-dev-175832-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-smilegate-dev-175832-deployment",
+      "UnauthRoleName": "amplify-smilegate-dev-175832-unauthRole",
+      "StackName": "amplify-smilegate-dev-175832",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:804049472649:stack/amplify-smilegate-dev-175832/917d5830-395f-11ec-95e9-0ac3dd937822",
+      "AmplifyAppId": "d2g6bc04jktq2"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2g6bc04jktq2",
+          "type": "manual"
+        }
+      },
+      "auth": {
+        "smilegate9a3f86ad": {}
+      }
+    }
+  }
+}

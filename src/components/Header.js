@@ -4,18 +4,18 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   
-  top : 0;
-  display : flex;
-  width: 100 %;
-  padding :32px 64px;
+  
+  background : pink;
 `
 
 const Categories = styled.nav`
   display: flex;
-  margin-right: 64px;
+  
   & > * + * {
     margin-left: 64px;
   }
+
+  
 `
 
 const Category = styled.button`
@@ -41,11 +41,12 @@ const Header = () => {
     history.replace('/')
   }
 
+
   //const handelColor = useCallback( (cate) => (currentState.category === cate ? 'primary' : 'secondary') , [currentState])
 
   return (
     <Container>
-      {!location.pathname.includes('manager') && (
+      {(!location.pathname.includes('manager') && !location.pathname.includes('Editor')) && (
         <Categories>
           <Category onClick={() => handleGoHome()}> Home </Category>
           <Category onClick={() => handleCategory('blog')}> Blog </Category>

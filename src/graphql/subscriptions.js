@@ -107,6 +107,17 @@ export const onCreateBoard = /* GraphQL */ `
       categoryID
       title
       content
+      comment {
+        items {
+          id
+          boardID
+          name
+          text
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -119,6 +130,17 @@ export const onUpdateBoard = /* GraphQL */ `
       categoryID
       title
       content
+      comment {
+        items {
+          id
+          boardID
+          name
+          text
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -131,6 +153,53 @@ export const onDeleteBoard = /* GraphQL */ `
       categoryID
       title
       content
+      comment {
+        items {
+          id
+          boardID
+          name
+          text
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment {
+    onCreateComment {
+      id
+      boardID
+      name
+      text
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment {
+    onUpdateComment {
+      id
+      boardID
+      name
+      text
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment {
+    onDeleteComment {
+      id
+      boardID
+      name
+      text
       createdAt
       updatedAt
     }

@@ -49,46 +49,94 @@ const ManageCategory = () => {
   const [category, setCategory] = useState([])
   const [categoryName, setCategoryName] = useState()
   const [categoryIndex, setCategoryIndex] = useState()
-
+  const [categoryId, setCategoryId] = useState()
   const addCategory = (e) => {
-    setCategory((current) => [...current, '게시글'])
+    console.log('click!')
+    setCategory((current) => [
+      ...current,
+      { id: ' ', name: '임시제목 수정 후 저장' },
+    ])
   }
   const pushCategory = async () => {
     for (var i = 0; i < category.length; i++) {
       var categoryDetail = {
-        name: category[i],
+        name: category[i].name,
       }
       const newCategory = await API.graphql(
         graphqlOperation(mutations.createCategory, { input: categoryDetail }),
       )
     }
+    alert('저장되었습니다')
+    getCategory()
   }
 
+  const getBoard = async ({ cateId }) => {
+    const allBoard = await API.graphql(
+      graphqlOperation(queries.listBoards, {
+        filter: {
+          categoryID: cateId,
+        },
+      }),
+    )
+    if (allBoard.data.listBoards.items.length != 0) {
+      for (var i = 0; i < allBoard.data.listBoards.items.length; i++) {}
+    }
+  }
+
+  const delCategory = async () => {
+    const categoryDetail = {
+      id: categoryId,
+    }
+    const removeCate = await API.graphql(
+      graphqlOperation(mutations.deleteCategory, { input: categoryDetail }),
+    )
+    console.log(removeCate)
+    if (removeCate.data.deleteCategory.board.items.length != 0) {
+      for (
+        var i = 0;
+        i < removeCate.data.deleteCategory.board.items.length;
+        i++
+      ) {
+        const boardDetail = {
+          id: removeCate.data.deleteCategory.board.items[i].id,
+        }
+        const removeBoard = await API.graphql(
+          graphqlOperation(mutations.deleteBoard, {
+            input: boardDetail,
+          }),
+        )
+      }
+      alert('카테고리와 게시물을 삭제했습니다')
+    }
+  }
   const getCategory = async () => {
     const allCategory = await API.graphql(
       graphqlOperation(queries.listCategorys),
     )
+    console.log(allCategory)
+
     if (allCategory.data.listCategorys.items.length != 0) {
-        for(var i=0; i < allCategory.data.listCategorys.items.length; i++)
-        {
-            setCategory(oldArray => [...oldArray, allCategory.data.listCategorys.items[i].name]);
+      setCategory([])
+      for (var i = 0; i < allCategory.data.listCategorys.items.length; i++) {
+        var cate = {
+          id: allCategory.data.listCategorys.items[i].id,
+          name: allCategory.data.listCategorys.items[i].name,
         }
-      
+        setCategory((oldArray) => [...oldArray, cate])
+      }
     }
   }
 
   const handleChange = (e) => {
-    const temp = [...category]
-    temp[categoryIndex] = e.target.value
-    setCategory(temp)
     setCategoryName(e.target.value)
+    category[categoryIndex].name = e.target.value
   }
 
   const handleClick = (data, index) => {
     console.log(data)
     console.log(index)
-
-    setCategoryName(data)
+    setCategoryId(data.id)
+    setCategoryName(data.name)
     setCategoryIndex(index)
   }
   const handleDelClick = (e) => {
@@ -97,22 +145,19 @@ const ManageCategory = () => {
     temp.splice(categoryIndex, 1)
     setCategoryName('')
     setCategory(temp)
+    delCategory()
   }
 
   useEffect(() => {
     getCategory()
+    console.log(...category)
   }, [])
 
-  /* useEffect(()=>
-  {
-      if(category != {})
-      console.log(category)
-  },[category])*/
   return (
     <ManageWrapper>
       <Content_Title>카테고리 등록</Content_Title>
       <div>
-        <Category_button src={btn_addCategory} onClick={addCategory} />
+        <Category_button src={btn_addCategory} onClick={() => addCategory()} />
         <Category_button
           width="50px"
           src={btn_delCategory}
@@ -122,11 +167,12 @@ const ManageCategory = () => {
       <Category_table>
         <div>
           <CategoryList>
+            {console.log(category)}
             <ul>
               {category
                 ? category.map((data, index) => (
                     <Row key={index} onClick={() => handleClick(data, index)}>
-                      <Category_Title>{data}</Category_Title>
+                      <Category_Title>{data.name}</Category_Title>
                     </Row>
                   ))
                 : '카테고리가 없습니다'}

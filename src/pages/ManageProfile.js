@@ -92,14 +92,7 @@ const ManageProfile = () => {
       }
     }
 
-    
-
-    /*ReactS3Client
-        .uploadFile(uuid, profileImg)
-        .then(data => console.log(data))
-        .catch(error => console.error(error))*/
-
-    //console.log(profileImg)
+  
 
     if (profileImg != '') {
      

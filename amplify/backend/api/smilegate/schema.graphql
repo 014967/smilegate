@@ -18,5 +18,15 @@ type Board @model @key(name: "categoryId", fields : ["categoryID"]){
   categoryID : ID!
   title : String
   content : String
+  comment : [Comment] @connection(keyName : "boardId", fields : ["id"])
   
+}
+
+type Comment @model 
+@key(name : "boardId", fields : ["boardID"])
+{
+  id: ID!
+  boardID : ID!
+  name : String
+  text : String
 }

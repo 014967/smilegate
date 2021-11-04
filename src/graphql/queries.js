@@ -80,6 +80,17 @@ export const getBoard = /* GraphQL */ `
       categoryID
       title
       content
+      comment {
+        items {
+          id
+          boardID
+          name
+          text
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -97,6 +108,40 @@ export const listBoards = /* GraphQL */ `
         categoryID
         title
         content
+        comment {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getComment = /* GraphQL */ `
+  query GetComment($id: ID!) {
+    getComment(id: $id) {
+      id
+      boardID
+      name
+      text
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        boardID
+        name
+        text
         createdAt
         updatedAt
       }

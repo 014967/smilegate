@@ -9,15 +9,15 @@ import Block from '../components/elements/Block'
 import BoardItem from './BoardItem'
 
 const BoardItemWrapper = styled.div`
-  width: 1000px;
   position: absolute;
-  z-index :999;
-  height: 100%;
-  padding-left: 400px;
-  padding-right: 200px;
-  margin-left: 10px;
-  margin-top: 10px;
-  pointer-events: none; 
+  z-index: 999;
+
+  width: 1000px;
+  height: 3000px;
+
+  margin-left: 900px;
+  margin-top: 200px;
+  pointer-events: none;
   padding-top: 50px;
 `
 
@@ -63,6 +63,7 @@ const Board = () => {
       setBoard([])
       for (var i = 0; i < allBoard.data.listBoards.items.length; i++) {
         var boardData = {
+          title: allBoard.data.listBoards.items[i].title,
           categoryID: allBoard.data.listBoards.items[i].categoryID,
           content: allBoard.data.listBoards.items[i].content,
           id: allBoard.data.listBoards.items[i].id,
@@ -88,8 +89,15 @@ const Board = () => {
         <Block width="10px" />
         <HeaderNormal>{board.length + '개의 글'}</HeaderNormal>
       </BoardHeader>
+      <Block width="100%" height="1px" color="gray" />
+      <Block width="100%" height="100px" color="white" />
       {board && board.length !== 0 ? (
-        board.map((data, index) => <BoardItem key={index} data={data} />)
+        board.map((data, index) => (
+          <div>
+            <BoardItem key={index} data={data} />
+            <Block width="100%" height="3px" color="gray" />
+          </div>
+        ))
       ) : (
         <div>아직 데이터가 없습니다</div>
       )}

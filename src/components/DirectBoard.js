@@ -12,10 +12,10 @@ import CommentInput from './CommentInput'
 
 const BoardItemWrapper = styled.div`
   position: absolute;
-  height: 100%;
-  padding-left: 400px;
-  padding-right: 200px;
-  padding-top: 200px;
+  margin-left: 900px;
+  margin-top: 200px;
+  width: 1000px;
+  height: 3000px;
   z-index: 2;
 `
 
@@ -38,28 +38,33 @@ const DirectBoard = () => {
   console.log(params)
 
   const getComment = async () => {
-    const allComment = await API.graphql(
-      graphqlOperation(queries.listComments, {
-        filter: {
-          boardID: {
-            contains: params.id,
+    try {
+      const allComment = await API.graphql(
+        graphqlOperation(queries.listComments, {
+          filter: {
+            boardID: {
+              contains: params.id,
+            },
           },
-        },
-      }),
-    )
-    if (allComment.data.listComments.items.length != 0) {
-      setCommentList([])
-      for (var i = 0; i < allComment.data.listComments.items.length; i++) {
-        var commentData = {
-          id: allComment.data.listComments.items[i].id,
-          name: allComment.data.listComments.items[i].name,
-          text: allComment.data.listComments.items[i].text,
-        }
+        }),
+      )
 
-        setCommentList((commentList) => [...commentList, commentData])
+      if (allComment.data.listComments.items.length !== 0) {
+        setCommentList([])
+        for (var i = 0; i < allComment.data.listComments.items.length; i++) {
+          var commentData = {
+            id: allComment.data.listComments.items[i].id,
+            name: allComment.data.listComments.items[i].name,
+            text: allComment.data.listComments.items[i].text,
+          }
+
+          setCommentList((commentList) => [...commentList, commentData])
+        }
+      } else {
+        setCommentList([]) ///여기까지 ㅎㅆ다
       }
-    } else {
-      setCommentList([]) ///여기까지 ㅎㅆ다
+    } catch (Exception) {
+      console.log(Exception)
     }
   }
 
@@ -105,18 +110,14 @@ const DirectBoard = () => {
       <BoardHeader>
         <HeaderBord>{directBoard.title}</HeaderBord>
       </BoardHeader>
-      {
-        (console.log(directBoard),
-        directBoard && <BoardItem data={directBoard} />)
-      }
+      {directBoard && <BoardItem data={directBoard} />}
       <Block width="100%" height="3px" color="gray" />
 
       {directBoard && <CommentInput setEvent={setEvent} data={directBoard} />}
 
-      {
-        (console.log(commentList),
-        commentList.length !== 0 && <Comment data={commentList} />)
-      }
+      {commentList.length !== 0 && typeof commentList !== 'undefined' && (
+        <Comment data={commentList} />
+      )}
     </BoardItemWrapper>
   )
 }

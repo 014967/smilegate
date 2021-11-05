@@ -16,9 +16,10 @@ Amplify.configure(awsExports)
 const WholeBody = styled.div`
   background-color: white;
   position: absolute;
-  margin-left: 10px;
-  margin-top: 10px;
-  width: 100%;
+  margin-left: 500px;
+  margin-top: 100px;
+  width: 1500px;
+  height: 3000px;
   z-index: 2;
   border: 10px solid #faebd7;
 `
@@ -27,7 +28,6 @@ const Wrapper = styled.div`
   display: flex;
   padding-left: 20px;
   padding-top: 50px;
-  height: 100vw;
 `
 
 const VisibleContainer = styled.div``

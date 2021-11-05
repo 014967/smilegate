@@ -17,7 +17,7 @@ import Edit from '../components/Edit'
 const HeadSkin = styled.div`
   background-color: #f5eded;
   position: relative;
-  width: 100%;
+  height: 4000px;
   z-index: 1;
 `
 

@@ -5,6 +5,7 @@ import * as mutations from '../graphql/mutations'
 import * as queries from '../graphql/queries'
 import btn_addCategory from '../assets/images/btn_add_category.gif'
 import btn_delCategory from '../assets/images/btn_del_category.gif'
+import { prevElementSibling } from 'domutils'
 
 const ManageWrapper = styled.div`
   width: 800px;
@@ -50,6 +51,8 @@ const ManageCategory = () => {
   const [categoryName, setCategoryName] = useState()
   const [categoryIndex, setCategoryIndex] = useState()
   const [categoryId, setCategoryId] = useState()
+  const [currentCategory, setCurrentCategory] = useState([])
+
   const addCategory = (e) => {
     console.log('click!')
     setCategory((current) => [
@@ -59,28 +62,17 @@ const ManageCategory = () => {
   }
   const pushCategory = async () => {
     for (var i = 0; i < category.length; i++) {
-      var categoryDetail = {
-        name: category[i].name,
+      if (category[i].id == ' ') {
+        var categoryDetail = {
+          name: category[i].name,
+        }
+        const newCategory = await API.graphql(
+          graphqlOperation(mutations.createCategory, { input: categoryDetail }),
+        )
       }
-      const newCategory = await API.graphql(
-        graphqlOperation(mutations.createCategory, { input: categoryDetail }),
-      )
     }
     alert('저장되었습니다')
     getCategory()
-  }
-
-  const getBoard = async ({ cateId }) => {
-    const allBoard = await API.graphql(
-      graphqlOperation(queries.listBoards, {
-        filter: {
-          categoryID: cateId,
-        },
-      }),
-    )
-    if (allBoard.data.listBoards.items.length != 0) {
-      for (var i = 0; i < allBoard.data.listBoards.items.length; i++) {}
-    }
   }
 
   const delCategory = async () => {

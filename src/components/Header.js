@@ -3,19 +3,15 @@ import { useLocation, useHistory, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  
-  
-  background : pink;
+  background: pink;
 `
 
 const Categories = styled.nav`
   display: flex;
-  
+
   & > * + * {
     margin-left: 64px;
   }
-
-  
 `
 
 const Category = styled.button`
@@ -41,19 +37,20 @@ const Header = () => {
     history.replace('/')
   }
 
-
   //const handelColor = useCallback( (cate) => (currentState.category === cate ? 'primary' : 'secondary') , [currentState])
 
   return (
     <Container>
-      {(!location.pathname.includes('manager') && !location.pathname.includes('Editor')) && (
-        <Categories>
-          <Category onClick={() => handleGoHome()}> Home </Category>
-          <Category onClick={() => handleCategory('blog')}> Blog </Category>
-          <Category onClick={() => handleCategory('diary')}> Diary </Category>
-          <Category onClick={() => handleCategory('etc')}> Etc </Category>
-        </Categories>
-      )}
+      {!location.pathname.includes('information') &&
+        !location.pathname.includes('Editor') && (
+          <Categories>
+            <Category onClick={() => handleGoHome()}> Home </Category>
+            <Category onClick={() => handleCategory('information')}>
+              {' '}
+              Info{' '}
+            </Category>
+          </Categories>
+        )}
     </Container>
   )
 }

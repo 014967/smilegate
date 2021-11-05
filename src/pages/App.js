@@ -39,7 +39,7 @@ const App = () => {
         <Route exact path="/blog"></Route>
         <Route exact path="/diray"></Route>
         <Route exact path="/etc"></Route>
-        <Route exact path="/manager" component={ManagerPage}></Route>
+        <Route exact path="/information" component={ManagerPage}></Route>
         <Route exact path="/Editor" component={Editor}></Route>
         <Route exact path="/Edit/:id" component={Edit}></Route>
       </Router>

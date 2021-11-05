@@ -99,7 +99,7 @@ const MainPage = () => {
 
   const handleOpen = () => {
     if (
-      location.pathname.includes('manager') ||
+      location.pathname.includes('information') ||
       location.pathname.includes('Editor') ||
       location.pathname.includes('Edit')
     ) {
@@ -121,7 +121,7 @@ const MainPage = () => {
 
   return (
     <WholeBody open={open}>
-      {!location.pathname.includes('manager') &&
+      {!location.pathname.includes('information') &&
         !location.pathname.includes('Editor') && (
           <Wrapper>
             <VisibleContainer>
